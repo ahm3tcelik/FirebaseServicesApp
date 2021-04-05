@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="@dimen/low"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signUpInputLayoutName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/account">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ad"
+                android:inputType="text"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="@dimen/low"
+            android:layout_height="0dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signUpInputLayoutSurname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/account">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpTextSurname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Soyad"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpInputLayoutMail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:startIconDrawable="@drawable/account">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpTextMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-Posta"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpInputLayoutPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:startIconDrawable="@drawable/password"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Parola"
+            android:singleLine="true"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpInputLayoutPasswordConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:startIconDrawable="@drawable/password"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpTextPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Parola (Tekrar)"
+            android:singleLine="true"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/signUpBtnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kayıt Ol" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zaten bir hesabın var mı? "/>
+
+        <TextView
+            android:id="@+id/signUpToSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giriş Yap"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>
