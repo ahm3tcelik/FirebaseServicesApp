@@ -1,157 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="@dimen/low"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:orientation="vertical"
+        android:padding="@dimen/low"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/signUpInputLayoutName"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            app:startIconDrawable="@drawable/account">
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signUpTextName"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUpInputLayoutName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Ad"
-                android:inputType="text"
-                android:singleLine="true" />
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:startIconDrawable="@drawable/account">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUpTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ad"
+                    android:inputType="text"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="@dimen/low"
+                android:layout_height="0dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signUpInputLayoutSurname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:startIconDrawable="@drawable/account">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signUpTextSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Soyad"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
         <Space
-            android:layout_width="@dimen/low"
-            android:layout_height="0dp" />
+            android:layout_width="0dp"
+            android:layout_height="@dimen/normal" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/signUpInputLayoutSurname"
-            android:layout_width="0dp"
+            android:id="@+id/signUpInputLayoutMail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            app:startIconDrawable="@drawable/account">
+            app:startIconDrawable="@drawable/mail">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signUpTextSurname"
+                android:id="@+id/signUpTextMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Soyad"
+                android:hint="E-Posta"
                 android:inputType="textEmailAddress"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/normal" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/normal" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signUpInputLayoutMail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:startIconDrawable="@drawable/account">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signUpTextMail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signUpInputLayoutPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-Posta"
-            android:inputType="textEmailAddress"
-            android:singleLine="true" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/password"
+            app:passwordToggleEnabled="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Parola"
+                android:singleLine="true"
+                android:inputType="textPassword" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/normal" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signUpInputLayoutPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:startIconDrawable="@drawable/password"
-        app:passwordToggleEnabled="true">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/normal" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signUpTextPassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signUpInputLayoutPasswordConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Parola"
-            android:singleLine="true"
-            android:inputType="textPassword" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/password"
+            app:passwordToggleEnabled="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpTextPasswordConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Parola (Tekrar)"
+                android:singleLine="true"
+                android:inputType="textPassword" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/normal" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signUpInputLayoutPasswordConfirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:startIconDrawable="@drawable/password"
-        app:passwordToggleEnabled="true">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signUpTextPasswordConfirm"
+        <Button
+            android:id="@+id/signUpBtnSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Parola (Tekrar)"
-            android:singleLine="true"
-            android:inputType="textPassword" />
+            android:text="Kayıt Ol" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/normal" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/signUpBtnSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Kayıt Ol" />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/normal" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zaten bir hesabın var mı? "/>
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/signUpToSignIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giriş Yap"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zaten bir hesabın var mı? "/>
+
+            <TextView
+                android:id="@+id/signUpToSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giriş Yap"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
