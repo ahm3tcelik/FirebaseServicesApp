@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:layout_margin="@dimen/low"
     android:orientation="vertical">
 
     <ImageView
@@ -16,14 +17,16 @@
         android:layout_height="@dimen/normal" />
 
     <LinearLayout
-        android:background="@color/cardview_light_background"
+        android:background="@drawable/rounded_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="@dimen/high"
-        android:layout_margin="@dimen/low"
+        android:elevation="@dimen/normal"
+        android:layout_marginHorizontal="@dimen/high"
+        android:layout_marginBottom="@dimen/high"
         android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
+            android:background="@drawable/rounded_bg"
             android:id="@+id/authTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -36,6 +39,5 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
     </LinearLayout>
-
 
 </LinearLayout>
