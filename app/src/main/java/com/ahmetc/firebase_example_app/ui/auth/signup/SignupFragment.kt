@@ -11,12 +11,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ahmetc.firebase_example_app.R
 import com.ahmetc.firebase_example_app.databinding.FragmentSignupBinding
 import com.ahmetc.firebase_example_app.ui.auth.utils.AuthFragments
+import com.google.firebase.auth.FirebaseAuth
 
 class SignUpFragment(private val viewPager: ViewPager2?) : Fragment(R.layout.fragment_signup) {
+
     private var _binding: FragmentSignupBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: SignUpViewModel by viewModels()
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,21 +27,19 @@ class SignUpFragment(private val viewPager: ViewPager2?) : Fragment(R.layout.fra
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignupBinding.inflate(inflater, container, false)
+        mAuth = FirebaseAuth.getInstance()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.signUpBtnSignUp.setOnClickListener {
-            val result = viewModel.onBtnSignUpClick()
-            if (result != null) { // FAIL
-                Toast.makeText(context, result, Toast.LENGTH_LONG).show()
-            }
-            else { // SUCCESS
+        viewModel.signUpViewState.observe(viewLifecycleOwner, {
+            it?.let { renderSignUp(it) }
+        })
 
-            }
-        }
+        binding.signUpBtnSignUp.setOnClickListener { viewModel.onBtnSignUpClick(mAuth)}
 
         binding.signUpToSignIn.setOnClickListener {
             viewPager?.setCurrentItem(AuthFragments.SIGN_IN.ordinal, true)
@@ -49,6 +50,23 @@ class SignUpFragment(private val viewPager: ViewPager2?) : Fragment(R.layout.fra
         viewModel.surname = binding.signUpTextSurname.text
         viewModel.password = binding.signUpTextPassword.text
         viewModel.passwordConfirm = binding.signUpTextPasswordConfirm.text
+    }
 
+    private fun renderSignUp(viewState: SignUpViewState) {
+        if (viewState.isFail) {
+            Toast.makeText(context, viewState.errorMsg, Toast.LENGTH_LONG).show()
+        }
+        else if (viewState.isSuccess) {
+            resetForm()
+            viewPager?.setCurrentItem(AuthFragments.SIGN_IN.ordinal, true)
+            Toast.makeText(context, "Kayıt başarıyla oluşturuldu. E-Mailinizi kontrol edin", Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun resetForm() {
+        binding.signUpTextMail.setText("")
+        binding.signUpTextName.setText("")
+        binding.signUpTextSurname.setText("")
+        binding.signUpTextPassword.setText("")
+        binding.signUpTextPasswordConfirm.setText("")
     }
 }
