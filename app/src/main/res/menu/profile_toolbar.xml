@@ -7,7 +7,4 @@
         android:icon="@drawable/power"
         android:title="Çıkış Yap"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/profileToolbarChangePw"
-        android:title="Parola Değiştir" />
 </menu>
