@@ -1,7 +1,6 @@
 package com.ahmetc.firebase_example_app.ui.auth.signup
 
 import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -51,13 +50,6 @@ class SignUpViewModel : ViewModel() {
     }
 
     private fun handleSignUp(firebaseAuth: FirebaseAuth) {
-        val fireUser = firebaseAuth.currentUser
-
-        if (fireUser == null) {
-            failSignUp("Bir hata meydana geldi")
-            return
-        }
-
         firebaseAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
             .addOnCompleteListener { taskAuth ->
                 if (taskAuth.isSuccessful) {
