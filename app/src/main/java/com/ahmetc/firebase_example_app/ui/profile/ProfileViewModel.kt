@@ -1,7 +1,6 @@
 package com.ahmetc.firebase_example_app.ui.profile
 
 import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ahmetc.firebase_example_app.data.models.User
@@ -11,9 +10,14 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.File
+import java.io.FileInputStream
 import java.net.URI
 
+
 class ProfileViewModel : ViewModel() {
+    private val storage = Firebase.storage
     private val db = Firebase.firestore
     val user: MutableLiveData<User> = MutableLiveData()
 
@@ -36,8 +40,28 @@ class ProfileViewModel : ViewModel() {
         getUserFromDb(firebaseAuth)
     }
 
-    fun uploadAvatar(uri: URI) {
+    fun uploadAvatar(uri: URI, auth: FirebaseAuth) {
+        if (auth.currentUser == null) {
+            return
+        }
+        val file = File(uri.path)
+        val stream = FileInputStream(file)
+        val uploadTask = storage.reference
+            .child("avatars/${auth.currentUser!!.uid}")
+            .putStream(stream)
 
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+        }.addOnSuccessListener { taskSnapshot ->
+            taskSnapshot.storage.downloadUrl.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                }
+                else {
+                    
+                }
+            }
+        }
     }
 
     fun updateUser(newUser: User?) {
