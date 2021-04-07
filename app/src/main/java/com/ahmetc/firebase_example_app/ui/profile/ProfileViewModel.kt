@@ -1,20 +1,106 @@
 package com.ahmetc.firebase_example_app.ui.profile
 
+import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ahmetc.firebase_example_app.data.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.net.URI
 
-class ProfileViewModel: ViewModel() {
+class ProfileViewModel : ViewModel() {
     private val db = Firebase.firestore
     val user: MutableLiveData<User> = MutableLiveData()
 
+    var newName: Editable? = null
+    var newSurname: Editable? = null
+    var newAvatarUrl: String? = null
+    var newPassword: Editable? = null
+
+    val deleteAccViewState: MutableLiveData<ProfileViewState> = MutableLiveData()
+    val userViewState: MutableLiveData<ProfileViewState> = MutableLiveData()
+    val newPasswordViewState: MutableLiveData<ProfileViewState> = MutableLiveData()
+
+    init {
+        deleteAccViewState.value = ProfileViewState()
+        userViewState.value = ProfileViewState()
+        newPasswordViewState.value = ProfileViewState()
+    }
+
     fun loadUser(firebaseAuth: FirebaseAuth) {
         getUserFromDb(firebaseAuth)
+    }
+
+    fun uploadAvatar(uri: URI) {
+
+    }
+
+    fun updateUser(newUser: User?) {
+        if (newUser == null) {
+            failViewState(userViewState, "Bir hata meydana geldi")
+            return
+        }
+
+        db.collection("users")
+            .document(newUser.uid)
+            .set(newUser, SetOptions.merge())
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    successViewState(userViewState)
+                } else {
+                    failViewState(
+                        userViewState,
+                        task.exception?.message ?: "Bir hata meydana geldi"
+                    )
+                }
+            }
+    }
+
+    fun updatePassword(firebaseAuth: FirebaseAuth) {
+        if (newPassword.toString().isEmpty()) {
+            failViewState(newPasswordViewState, "Bu alan boş bırakılamaz")
+            return
+        }
+        if (firebaseAuth.currentUser == null) {
+            failViewState(newPasswordViewState, "Bir hata meydana geldi")
+        } else {
+            firebaseAuth.currentUser!!.updatePassword(newPassword.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        successViewState(newPasswordViewState)
+                    } else {
+                        failViewState(
+                            newPasswordViewState,
+                            task.exception?.message ?: "Bir hata meydana geldi"
+                        )
+                    }
+                }
+        }
+    }
+
+    fun deleteUser(firebaseAuth: FirebaseAuth) {
+        if (firebaseAuth.currentUser == null) {
+            failViewState(deleteAccViewState, "Bir hata meydana geldi")
+            return
+        }
+        val userUid = firebaseAuth.currentUser!!.uid
+        firebaseAuth.currentUser!!.delete()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    db.collection("users").document(userUid).delete()
+                    successViewState(deleteAccViewState)
+                } else {
+                    failViewState(
+                        deleteAccViewState,
+                        task.exception?.message ?: "Bir hata meydana geldi"
+                    )
+                }
+            }
     }
 
     private fun getUserFromDb(firebaseAuth: FirebaseAuth) {
@@ -35,5 +121,14 @@ class ProfileViewModel: ViewModel() {
                     user.value = tempUser
                 }
             }
+    }
+
+
+    private fun successViewState(viewState: MutableLiveData<ProfileViewState>) {
+        viewState.value = ProfileViewState(isFail = false, isSuccess = true, errorMsg = "")
+    }
+
+    private fun failViewState(viewState: MutableLiveData<ProfileViewState>, msg: String) {
+        viewState.value = ProfileViewState(isFail = true, isSuccess = false, errorMsg = msg)
     }
 }
