@@ -25,9 +25,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/normal" />
+    <Space android:layout_width="0dp" android:layout_height="@dimen/normal" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signInInputLayoutPassword"

@@ -1,5 +1,6 @@
 package com.ahmetc.firebase_example_app.ui.auth.signin
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.ahmetc.firebase_example_app.R
 import com.ahmetc.firebase_example_app.databinding.DialogResetPasswordBinding
 import com.ahmetc.firebase_example_app.databinding.FragmentSigninBinding
 import com.ahmetc.firebase_example_app.ui.auth.utils.AuthFragments
+import com.ahmetc.firebase_example_app.ui.profile.ProfileActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
@@ -104,7 +106,9 @@ class SignInFragment(private val viewPager: ViewPager2?) : Fragment(R.layout.fra
             Toast.makeText(context, viewState.errorMsg, Toast.LENGTH_SHORT).show()
         }
         if (viewState.isSuccess) {
-            Toast.makeText(context, "Başarılı!", Toast.LENGTH_LONG).show()
+            val intent = Intent(context, ProfileActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
     }
 
