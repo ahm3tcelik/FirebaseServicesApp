@@ -142,7 +142,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/activityBtnSave"
+                    android:id="@+id/profileBtnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -153,13 +153,14 @@
                 <Space android:layout_width="@dimen/normal" android:layout_height="0dp" />
 
                 <Button
+                    android:id="@+id/profileBtnCancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="VAZGEÇ"
-                    android:textColor="@color/design_default_color_primary"
                     android:backgroundTint="@color/white"
-                    android:elevation="@dimen/normal"/>
+                    android:elevation="@dimen/normal"
+                    android:text="VAZGEÇ"
+                    android:textColor="@color/design_default_color_primary" />
 
             </LinearLayout>
 
@@ -174,24 +175,6 @@
                 android:layout_height="wrap_content"
                 android:text="Parola Değiştir"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-            <Space android:layout_width="0dp" android:layout_height="@dimen/normal" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true"
-                android:hint="Eski Parola"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                app:startIconDrawable="@drawable/password">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/profileTextPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <Space android:layout_width="0dp" android:layout_height="@dimen/normal" />
 
@@ -219,7 +202,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/activityBtnNewPassword"
+                    android:id="@+id/profileBtnNewPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -230,7 +213,7 @@
                 <Space android:layout_width="@dimen/normal" android:layout_height="0dp" />
 
                 <Button
-                    android:id="@+id/activityBtnNewPasswordCancel"
+                    android:id="@+id/profileBtnNewPasswordCancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -247,6 +230,7 @@
                 android:background="@android:color/darker_gray"/>
 
             <Button
+                android:id="@+id/profileBtnDelete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="HESABIMI SİL"
