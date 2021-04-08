@@ -9,7 +9,6 @@ class SignInViewModel : ViewModel() {
 
     var email: Editable? = null;
     var password: Editable? = null
-
     var forgotPwMail: Editable? = null
 
     val signInViewState: MutableLiveData<SignInViewState> = MutableLiveData()
@@ -20,46 +19,27 @@ class SignInViewModel : ViewModel() {
         signInViewState.value = SignInViewState()
     }
 
-    private fun currentSignInViewState(): SignInViewState = signInViewState.value!!
-    private fun currentForgotPwViewState(): SignInViewState = signInViewState.value!!
-
     fun onForgotPwClick(firebaseAuth: FirebaseAuth?) {
         if (firebaseAuth != null) {
             firebaseAuth.sendPasswordResetEmail(forgotPwMail.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        forgotPwViewState.value = currentForgotPwViewState().copy(
-                            isSuccess = true,
-                            isFail = false,
-                            errorMsg = ""
-                        )
+                        successViewState(forgotPwViewState)
                     }
                     else {
-                        forgotPwViewState.value = currentForgotPwViewState().copy(
-                            isSuccess = false,
-                            isFail = true,
-                            errorMsg = task.exception?.message ?: "Hata!"
-                        )
+                        failViewState(forgotPwViewState, task.exception?.message ?: "Hata")
                     }
                 }
         }
         else {
-            forgotPwViewState.value = currentForgotPwViewState().copy(
-                isFail = true,
-                isSuccess = false,
-                errorMsg = "Bir hata meydana geldi"
-            )
+            failViewState(forgotPwViewState, "Bir hata meydana geldi")
         }
     }
 
     fun onBtnSignInClick(firebaseAuth: FirebaseAuth?) {
 
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
-            signInViewState.value = currentSignInViewState().copy(
-                isSuccess = false,
-                isFail = true,
-                errorMsg = "Lütfen tüm alanları doldurun"
-            )
+            failViewState(signInViewState, "Lütfen tüm alanları doldurun")
         } else {
 
             if (firebaseAuth != null) {
@@ -70,31 +50,30 @@ class SignInViewModel : ViewModel() {
                             // CHECK MAIL VERIFICATION
                             if (firebaseAuth.currentUser?.isEmailVerified != true) {
                                 firebaseAuth.currentUser?.sendEmailVerification()
-                                signInViewState.value = currentSignInViewState().copy(
-                                    isFail = true,
-                                    errorMsg = "Lütfen hesabınızı doğrulayın. (E-Posta hesabınızı kontrol edin)",
-                                    isSuccess =  false
-                                )
+                                failViewState(signInViewState,
+                                    "Lütfen hesabınızı doğrulayın. (E-Ppostahesabınızı kontrol edin)")
                             }
                             else { // VERIFIED USER
-                                signInViewState.value = currentSignInViewState().copy(
-                                    isSuccess = true, isFail = false, errorMsg = ""
-                                )
+                                successViewState(signInViewState)
                             }
                         } else {
-                            signInViewState.value = currentSignInViewState().copy(
-                                isSuccess = false, isFail = true,
-                                errorMsg = task.exception?.message ?: "Giriş başarısız"
-                            )
+                            failViewState(signInViewState,
+                                task.exception?.message ?: "Giriş başarısız")
                         }
                     }
             }
             else {
-                signInViewState.value = currentSignInViewState().copy(
-                    isSuccess = false, isFail = true, errorMsg = "Bir hata meydana geldi"
-                )
+               failViewState(signInViewState, "Bir hata meydana geldi")
             }
 
         }
+    }
+
+    private fun successViewState(viewState: MutableLiveData<SignInViewState>) {
+        viewState.value = SignInViewState(isFail = false, isSuccess = true, errorMsg = "")
+    }
+
+    private fun failViewState(viewState: MutableLiveData<SignInViewState>, msg: String) {
+        viewState.value = SignInViewState(isFail = true, isSuccess = false, errorMsg = msg)
     }
 }

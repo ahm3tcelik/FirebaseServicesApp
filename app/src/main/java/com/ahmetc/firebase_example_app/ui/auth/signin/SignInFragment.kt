@@ -48,11 +48,11 @@ class SignInFragment(private val viewPager: ViewPager2?) : Fragment(R.layout.fra
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.signInViewState.observe(viewLifecycleOwner, {
-            it?.let { renderSignIn(it) }
+            it?.let { handleSignIn(it) }
         })
 
         viewModel.forgotPwViewState.observe(viewLifecycleOwner, {
-            it?.let { renderForgotPw(it) }
+            it?.let { handleForgotPw(it) }
         })
 
         binding.signInBtnSignIn.setOnClickListener { viewModel.onBtnSignInClick(mAuth) }
@@ -91,7 +91,7 @@ class SignInFragment(private val viewPager: ViewPager2?) : Fragment(R.layout.fra
         _binding = null
     }
 
-    private fun renderForgotPw(viewState: SignInViewState) {
+    private fun handleForgotPw(viewState: SignInViewState) {
         if (viewState.isFail) {
             Toast.makeText(context, viewState.errorMsg, Toast.LENGTH_SHORT).show()
         }
@@ -101,7 +101,7 @@ class SignInFragment(private val viewPager: ViewPager2?) : Fragment(R.layout.fra
         }
     }
 
-    private fun renderSignIn(viewState: SignInViewState) {
+    private fun handleSignIn(viewState: SignInViewState) {
         if (viewState.isFail) {
             Toast.makeText(context, viewState.errorMsg, Toast.LENGTH_SHORT).show()
         }

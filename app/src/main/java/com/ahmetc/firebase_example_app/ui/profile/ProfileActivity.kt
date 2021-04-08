@@ -113,6 +113,9 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.userViewState.observe(this, {
             it?.let { handleUserViewState(it) }
         })
+        viewModel.avatarViewState.observe(this, {
+            it?.let { handleAvatarState(it) }
+        })
     }
 
     private fun handleUser(user: User?) {
@@ -157,6 +160,16 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleAvatarState(viewState: ProfileViewState) {
+        if (viewState.isFail) {
+            Toast.makeText(this, viewState.errorMsg, Toast.LENGTH_LONG).show()
+        }
+        else if (viewState.isSuccess) {
+
+            Toast.makeText(this, "Avatar başarıyla güncellendi", Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -168,6 +181,7 @@ class ProfileActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             val avatarUri = data?.data
             if (avatarUri != null) {
+                viewModel.uploadAvatar(avatarUri, mAuth)
                 binding.profileAvatar.setImageURI(avatarUri)
             }
         }

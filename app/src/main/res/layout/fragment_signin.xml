@@ -7,7 +7,6 @@
     android:padding="@dimen/low"
     android:orientation="vertical">
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signInInputLayoutMail"
         android:layout_width="match_parent"
@@ -44,9 +43,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/normal" />
+    <Space android:layout_width="0dp" android:layout_height="@dimen/normal" />
 
     <TextView
         android:id="@+id/signInTextForgotPw"
@@ -56,10 +53,7 @@
         android:textStyle="bold"
         android:text="Parolamı unuttum" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+    <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
 
     <Button
         android:id="@+id/signInBtnSignIn"
@@ -67,9 +61,7 @@
         android:layout_height="wrap_content"
         android:text="Giriş Yap" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/normal" />
+    <Space android:layout_width="0dp" android:layout_height="@dimen/normal" />
 
     <LinearLayout
         android:layout_width="match_parent"

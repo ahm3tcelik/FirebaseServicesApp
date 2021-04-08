@@ -1,5 +1,6 @@
 package com.ahmetc.firebase_example_app.ui.profile
 
+import android.net.Uri
 import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,10 +12,6 @@ import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import java.io.File
-import java.io.FileInputStream
-import java.net.URI
-
 
 class ProfileViewModel : ViewModel() {
     private val storage = Firebase.storage
@@ -29,39 +26,53 @@ class ProfileViewModel : ViewModel() {
     val deleteAccViewState: MutableLiveData<ProfileViewState> = MutableLiveData()
     val userViewState: MutableLiveData<ProfileViewState> = MutableLiveData()
     val newPasswordViewState: MutableLiveData<ProfileViewState> = MutableLiveData()
+    val avatarViewState: MutableLiveData<ProfileViewState> = MutableLiveData()
 
     init {
         deleteAccViewState.value = ProfileViewState()
         userViewState.value = ProfileViewState()
         newPasswordViewState.value = ProfileViewState()
+        avatarViewState.value = ProfileViewState()
     }
 
     fun loadUser(firebaseAuth: FirebaseAuth) {
         getUserFromDb(firebaseAuth)
     }
 
-    fun uploadAvatar(uri: URI, auth: FirebaseAuth) {
+    fun uploadAvatar(uri: Uri, auth: FirebaseAuth) {
         if (auth.currentUser == null) {
             return
         }
-        val file = File(uri.path)
-        val stream = FileInputStream(file)
-        val uploadTask = storage.reference
+
+        storage.reference
             .child("avatars/${auth.currentUser!!.uid}")
-            .putStream(stream)
-
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            taskSnapshot.storage.downloadUrl.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-
-                }
-                else {
-                    
-                }
+            .putFile(uri)
+            .addOnSuccessListener { task ->
+                task.storage.downloadUrl
+                    .addOnSuccessListener { url ->
+                        updateAvatar(url.toString(), auth.currentUser!!.uid)
+                    }
+                    .addOnFailureListener {
+                        failViewState(avatarViewState, "Dosya yüklenemedi")
+                    }
             }
-        }
+            .addOnFailureListener {
+                failViewState(avatarViewState, "Yeniden yükleme işlemini başlatın")
+            }
+    }
+
+    private fun updateAvatar(avatarUrl: String, userId: String) {
+        db.collection("users")
+            .document(userId)
+            .set(hashMapOf(
+                "avatar_url" to avatarUrl
+            ), SetOptions.merge())
+            .addOnSuccessListener {
+                successViewState(avatarViewState)
+            }
+            .addOnFailureListener {
+                failViewState(avatarViewState,  it.message ?: "Bir hata meydana geldi")
+            }
     }
 
     fun updateUser(newUser: User?) {
@@ -146,7 +157,6 @@ class ProfileViewModel : ViewModel() {
                 }
             }
     }
-
 
     private fun successViewState(viewState: MutableLiveData<ProfileViewState>) {
         viewState.value = ProfileViewState(isFail = false, isSuccess = true, errorMsg = "")
